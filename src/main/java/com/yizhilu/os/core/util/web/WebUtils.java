@@ -413,11 +413,18 @@ public class WebUtils {
             String province = "";
             String city = "";
             try {
+                //获取 省、市
                 province = jo.get("province") == null ? "" : URLDecoder.decode(jo.get("province").toString(), "UTF-8");
                 city = jo.get("city") == null ? "" : URLDecoder.decode(jo.get("city").toString(), "UTF-8");
+                //省为空用国家代替
+                if(StringUtils.isEmpty(province)){
+                    province= jo.get("country") == null ? "" : URLDecoder.decode(jo.get("country").toString(), "UTF-8");
+                }
+
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+
             return (province.equals("") || province.equals(city)) ? city : province + " " + city;
         }catch (Exception e){
             e.printStackTrace();
